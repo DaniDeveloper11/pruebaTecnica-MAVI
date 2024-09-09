@@ -38,12 +38,12 @@ Este proyecto es una aplicación CRUD completa que gestiona clientes y usuarios,
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/tu-repositorio/mavi-crud.git
+   git clone [https://github.com/DaniDeveloper11/pruebaTecnica-MAVI.git]
    
 2. Ingresa Credenciales
     
-    correo: admin@correo.com
-    password: 123456
+    -correo: admin@correo.com
+    -password: 123456
 
 3. Se adjuta un customers_db.sql
     esto con el fin de importarlo ala base de datos local mysql
