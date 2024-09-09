@@ -46,4 +46,4 @@ Este proyecto es una aplicación CRUD completa que gestiona clientes y usuarios,
     password: 123456
 
 3. Se adjuta un customers_db.sql
-    esto con el fin de imporlo al a base de datos local mysql
+    esto con el fin de importarlo ala base de datos local mysql
