@@ -39,6 +39,14 @@ const router = createRouter({
       meta: { requiresAuth: true } 
 
     },
+    {
+      path: '/visualizar-tabla',
+      name: 'visualizar-tabla',
+      component: () => import('../views/TableView.vue'),
+      props:{titulo:'Ver Tablas'},
+      meta: { requiresAuth: true } 
+
+    },
 
     
 
