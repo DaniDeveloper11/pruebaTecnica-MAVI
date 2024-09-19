@@ -2,13 +2,20 @@
 import { ref, onMounted } from 'vue';
 import TableService from '../services/TableService';
 import { useRoute } from 'vue-router';
-
+import Header from "../components/UI/Heading.vue";
+import RouterLink from "../components/UI/RouterLink.vue";
 
 const route = useRoute();
 
 const { name } = route.params; // Obtenemos el nombre de la tabla desde la URL
 const tabla = ref({}) //Almacena los datos de la tabla
 const columnas = ref([]); // Almacena las claves de las columnas
+
+defineProps({
+  titulo: {
+    type: String
+  }
+});
 
 // Obtener los datos del cliente al montar el componente
 onMounted(() => {
@@ -23,6 +30,13 @@ onMounted(() => {
 </script>
 
 <template>
+
+<div class="flex justify-end">
+      <RouterLink to="visualizar-tabla">
+        Volver
+      </RouterLink>
+    </div>
+    <Header>{{ titulo }}</Header>
     <h1 class="text-lg font-bold mb-4">Tabla: {{ name }}</h1>
   
     <div class="mt-8 flow-root">

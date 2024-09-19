@@ -43,7 +43,7 @@ const router = createRouter({
       path: '/visualizar-tabla',
       name: 'visualizar-tabla',
       component: () => import('../views/TableView.vue'),
-      props:{titulo:'Ver Tablas'},
+      props:{titulo:'Tablas'},
       meta: { requiresAuth: true } 
 
     },
@@ -51,7 +51,7 @@ const router = createRouter({
       path: '/visualizar-registros:name',
       name: 'visualizar-registros',
       component: () => import('../views/RegisteresView.vue'),
-      // props:{titulo:'Ver Registros'},
+      props:{titulo:'Ver Registros'},
       meta: { requiresAuth: true } 
 
     },

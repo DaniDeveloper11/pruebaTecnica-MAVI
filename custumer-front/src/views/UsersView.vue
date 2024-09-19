@@ -18,7 +18,7 @@ const clientes = ref([])
 
 onMounted(() => {
   getClientes();
- 
+
 
 });
 
@@ -57,22 +57,21 @@ const eliminarCliente = id => {
 
 <template>
   <div>
-    <div class="flex justify-end">
-      <RouterLink to="agregar-cliente">
-        Agregar Cliente
-      </RouterLink>
-    </div>
     <Header>{{ titulo }}</Header>
-
 
   </div>
 
-  
+
 
 
   <div v-if="existenClientes" class="flow-root mx-auto  mt-10 p-5 bg-white shadow">
     <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <div class="flex justify-end my-3">
+          <RouterLink to="agregar-cliente">
+            Agregar Cliente
+          </RouterLink>
+        </div>
         <table class="min-w-full divide-y divide-gray-300">
           <thead>
             <tr>

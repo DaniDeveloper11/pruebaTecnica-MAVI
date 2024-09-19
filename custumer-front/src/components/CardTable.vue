@@ -12,7 +12,7 @@ const props = defineProps({
 
     <div class="overflow-hidden rounded-lg bg-red shadow cursor-pointer" @click="handleTable">
         <div class="px-4 py-5 sm:p-6">
-            <p><slot></slot></p>
+            <p class="text-xl font-semibold text-gray-500"><slot></slot></p>
         </div>
     </div>
 </RouterLink>
