@@ -4,7 +4,6 @@ import ClienteService from '../services/ClienteService';
 import Header from '../components/UI/Heading.vue'
 import RouterLink from '../components/UI/RouterLink.vue'
 import Cliente from '../components/UI/Cliente.vue'
-import TableService from '../services/TableService';
 import { data } from 'jquery';
 import { error } from 'jquery';
 
@@ -15,11 +14,11 @@ defineProps({
 })
 
 const clientes = ref([])
-const tablas = ref()
+
 
 onMounted(() => {
   getClientes();
-  getTables();
+ 
 
 });
 
@@ -29,11 +28,7 @@ const getClientes = () => {
     .catch(error => console.log('Hubo un error'));
 }
 
-const getTables = () => {
-  TableService.obtenerTablas()
-    .then((data) => tablas.value = data)
-    .catch(error => console.log('Hubo un error'));
-}
+
 
 const existenClientes = computed(() => {
   return clientes.value.length > 0
@@ -72,12 +67,8 @@ const eliminarCliente = id => {
 
   </div>
 
+  
 
-  <div v-for="table in tablas" key="tables.Tables_in_customers_db" class="overflow-hidden rounded-lg bg-red shadow cursor-pointer">
-              <div class="px-4 py-5 sm:p-6">
-                <p>{{ table.Tables_in_customers_db }}</p>
-              </div>
-            </div>
 
   <div v-if="existenClientes" class="flow-root mx-auto  mt-10 p-5 bg-white shadow">
     <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -100,6 +91,6 @@ const eliminarCliente = id => {
     </div>
   </div>
 
-  
+
 
 </template>

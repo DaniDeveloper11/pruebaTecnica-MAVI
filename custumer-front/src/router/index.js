@@ -47,6 +47,14 @@ const router = createRouter({
       meta: { requiresAuth: true } 
 
     },
+    {
+      path: '/visualizar-registros:name',
+      name: 'visualizar-registros',
+      component: () => import('../views/RegisteresView.vue'),
+      // props:{titulo:'Ver Registros'},
+      meta: { requiresAuth: true } 
+
+    },
 
     
 
