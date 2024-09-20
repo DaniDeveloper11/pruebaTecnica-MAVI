@@ -32,8 +32,7 @@ export default{
                     resolve(response);
                 },
                 error:(err) => {
-                    reject(err);
-                }
+                    reject(err);               }
             })
         })
     }

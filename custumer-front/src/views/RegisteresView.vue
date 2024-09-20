@@ -42,7 +42,7 @@ onMounted(() => {
     <div class="mt-8 flow-root">
       <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <table class="min-w-full divide-y divide-gray-300">
+          <table v-if="tabla.length > 0" class="min-w-full divide-y divide-gray-300">
             <thead>
               <tr class="divide-x divide-gray-200">
                 <!-- Renderizar encabezados dinámicos -->
@@ -60,6 +60,7 @@ onMounted(() => {
               </tr>
             </tbody>
           </table>
+          <p v-else>No hay registros</p>
         </div>
       </div>
     </div>

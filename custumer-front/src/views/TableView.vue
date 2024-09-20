@@ -37,7 +37,7 @@ const getTables = () => {
     </div>
     <Header>{{ titulo }}</Header>
  
-    <CardTable v-bind:name="table.Tables_in_customers_db" v-for="table in tables" :key="table.Tables_in_customers_db">{{ table.Tables_in_customers_db }}</CardTable>
+    <CardTable v-bind:name="table.Tables_in_sev" v-for="table in tables" :key="table.Tables_in_sev">{{ table.Tables_in_sev }}</CardTable>
 
 
 
