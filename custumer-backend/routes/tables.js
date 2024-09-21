@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { sequelizeDB2 } = require('../config/database');  // Importamos la conexión a la segunda base de datos
 
+
 router.get('/', async (req, res) => {
     try {
         // Verificamos la consulta en la segunda base de datos
