@@ -91,6 +91,10 @@ const tablaFiltrada = computed(() => {
 const openModal = () => {
   isModalOpen.value = true
 }
+
+const agregarRegistro = (formData) => {
+  console.log(formData)
+}
 </script>
 
 <template>
@@ -115,7 +119,7 @@ const openModal = () => {
           <FunnelIcon class="absolute top-1 left-0 pl-3 flex items-center pointer-events-none h-8 w-8 text-gray-400" />
 
           <select v-model="filtroColumna"
-            class=" pl-10 pr-8 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            class=" cursor-pointer pl-10 pr-8 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <option value="" > Todos
             </option>
             <option v-for="valor in filtroValoresUnicos" :key="valor" :value="valor">
@@ -171,7 +175,7 @@ const openModal = () => {
       </div>
 
     </div>
-    <ModalPost v-model:open="isModalOpen" :columnas="columnas" :name="name"></ModalPost>
+    <ModalPost v-model:open="isModalOpen" :columnas="columnas" :name="name" @agregar-registro="agregarRegistro"></ModalPost>
   </div>
 
 

@@ -29,7 +29,7 @@
                                                 class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                                 <label class="block text-gray-700 font-bold mb-2"
                                                     :for=item[index]>{{ item }}</label>
-                                                <input type="text" :id=item[index] :placeholder="'Ingresa ' + item"
+                                                <input v-model="formData[item]" type="text" :id=item[index] :placeholder="'Ingresa ' + item"
                                                     class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500"
                                                     required />
                                             </div>
@@ -40,7 +40,7 @@
                             <div class=" mt-5 mb-16 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                                 <button type="button"
                                     class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:col-start-2"
-                                    @click="open = false">Submit</button>
+                                    @click="submitForm()">Submit</button>
                                 <button type="button"
                                     class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
                                     @click="closeModal()" ref="cancelButtonRef">Cancel</button>
@@ -70,9 +70,11 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['update:open']);
-const isVisible = ref(props.open);
 
+const formData = ref({});
+
+const emit = defineEmits(['update:open','agregar-registro']);
+const isVisible = ref(props.open);
 watch(() => props.open, (newVal) => {
     isVisible.value = newVal;
 })
@@ -80,4 +82,15 @@ watch(() => props.open, (newVal) => {
 const closeModal = () => {
     emit('update:open', false);
 };
+
+watch(() => props.columnas, (newVal) => {
+  newVal.forEach(column => {
+    formData.value[column] = '';  // Inicializa con un string vacío o el valor que desees
+  });
+}, { immediate: true });
+
+const submitForm = () => {
+    emit('agregar-registro', formData.value)
+}
+
 </script>
