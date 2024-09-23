@@ -32,12 +32,11 @@ const getTables = () => {
 
 <template>
     <div>
-    <div class="flex justify-end">
-        <!-- <RouterLink to="home"></RouterLink> -->
+    <Header class="my-2 sm:my-5">{{ titulo }}</Header>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mx-auto">
+    <CardTable  v-bind:name="table.Tables_in_sev" v-for="table in tables" :key="table.Tables_in_sev">{{ table.Tables_in_sev }}</CardTable>
+
     </div>
-    <Header>{{ titulo }}</Header>
- 
-    <CardTable v-bind:name="table.Tables_in_sev" v-for="table in tables" :key="table.Tables_in_sev">{{ table.Tables_in_sev }}</CardTable>
 
 
 

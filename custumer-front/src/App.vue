@@ -102,7 +102,7 @@ watch(route, () => {
     
   </header>
 
-  <main class="max-w-6xl mx-auto  p-5">
+  <main class="max-w-6xl mx-auto p-5 mb-32">
     <RouterView />
 
   </main>

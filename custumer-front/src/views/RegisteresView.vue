@@ -106,7 +106,7 @@ const openModal = () => {
 
     <div class="mt-8 flow-root">
 
-      <div class="flex justify-end gap gap-2 bg-red-700 py-5 px-1 ">
+      <div class="flex justify-end gap gap-2 items-center py-5 px-1 ">
         <!-- Buscador -->
         <input v-model="searchTerm" type="text" placeholder="Buscar..."
           class="w-44 sm:max-w-m border border-gray-300 rounded-md sm:py-2 sm:px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
@@ -116,8 +116,7 @@ const openModal = () => {
 
           <select v-model="filtroColumna"
             class=" pl-10 pr-8 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <option value="">
-              <span class="hidden sm:block">Todos</span>
+            <option value="" > Todos
             </option>
             <option v-for="valor in filtroValoresUnicos" :key="valor" :value="valor">
               {{ valor }}
@@ -125,7 +124,12 @@ const openModal = () => {
           </select>
         </div>
         <!-- Filtro por columna (por ejemplo, primera columna) -->
-        <PlusButton @click="openModal"></PlusButton>
+        <div>  
+        <PlusButton :status="!(columnas.length > 0)" @click="openModal"></PlusButton>
+
+        </div> 
+
+
 
       </div>
 
