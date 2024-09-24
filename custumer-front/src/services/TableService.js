@@ -35,5 +35,26 @@ export default{
                     reject(err);               }
             })
         })
+    },
+    agregarRegister(name,data){
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url:'http://localhost:3000/api/tables/' + name,
+                method:'POST',
+                headers:{
+                    'Authorization': `Bearer ${token}`
+                },
+                contentType:'application/json',
+                data:JSON.stringify(data),
+                success:(response) => {
+                    resolve(response);
+                },
+                error:(err) =>{
+                    reject(err);
+                }
+            })
+        })
     }
+
+
 }

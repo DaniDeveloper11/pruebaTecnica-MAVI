@@ -7,6 +7,7 @@ import RouterLink from "../components/UI/RouterLink.vue";
 import { ArrowDownIcon, FunnelIcon } from '@heroicons/vue/24/solid';  // Importamos el ícono
 import PlusButton from '../components/UI/PlusButton.vue';
 import ModalPost from '../components/UI/ModalPost.vue';
+import { error } from 'jquery';
 
 
 
@@ -94,6 +95,11 @@ const openModal = () => {
 
 const agregarRegistro = (formData) => {
   console.log(formData)
+  TableService.agregarRegister(name,formData)
+  .then(respuesta => {
+    console.log(respuesta);
+  })
+  .catch(error => console.log(error));
 }
 </script>
 
