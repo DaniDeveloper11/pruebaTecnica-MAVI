@@ -1,52 +1,101 @@
 <template>
-    <div
-      v-if="isVisible"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-    >
-      <div class="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative">
-        <!-- Botón para cerrar el modal -->
-        <button
-          @click="closeModal"
-          class="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-        >
-          ✕
-        </button>
-  
-        <!-- Contenido dinámico del modal -->
-        <slot></slot>
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  // Prop para controlar si el modal es visible o no
-  const props = defineProps({
-    modelValue: {
+  <TransitionRoot as="template" :show="isVisible">
+      <Dialog class="relative z-10" @close="open = false">
+          <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+              leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+              <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </TransitionChild>
+
+          <div class="fixed top-32 max-h-[80vh] sm:max-h-[90vh] sm:inset-0 z-10 w-screen overflow-y-hidden">
+              <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                  <TransitionChild as="template" enter="ease-out duration-300"
+                      enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                      enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+                      leave-from="opacity-100 translate-y-0 sm:scale-100"
+                      leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                      <DialogPanel
+                          class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 max-h-screen overflow-y-auto">
+                          <div class="mt-3 sm:mt-5">
+                              <form>
+                                  <h2 class="text-lg font-semibold leading-7 text-gray-900">{{ name }}</h2>
+                                  <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
+                                      Añade un Registro a la Base de Datos {{ name }}
+                                  </p>
+
+                                  <!-- Sección con scroll cuando hay demasiados inputs -->
+                                  <div class="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0 sm:max-h-[50vh] max-h-96 overflow-y-auto">
+                                      <div v-for="(key, value) in filteredObjectStructure" :key="key"
+                                          class="sm:grid sm:grid-cols-2 sm:items-start sm:gap-4 sm:py-6">
+                                          <label class="block text-gray-700 font-bold mb-2" :for="key">{{ key }}</label>
+                                          <input v-model="formData[key]" type="text" :id="key" :placeholder="'Ingresa ' + key"
+                                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+                                              required />
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                          <div class=" mt-5 mb-16 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                              <button type="button"
+                                  class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:col-start-2"
+                                  @click="submitForm()">Submit</button>
+                              <button type="button"
+                                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                                  @click="closeModal()" ref="cancelButtonRef">Cancel</button>
+                          </div>
+                      </DialogPanel>
+                  </TransitionChild>
+              </div>
+          </div>
+      </Dialog>
+  </TransitionRoot>
+</template>
+
+<script setup>
+import { ref, watch, computed } from 'vue'
+import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
+
+const props = defineProps({
+  open: {
       type: Boolean,
       default: false
-    }
+  },
+  name: {
+      type: String
+  },
+  objectStructure: {
+      type: Object
+  }
+})
+
+const formData = ref({});
+
+const emit = defineEmits(['update:open', 'agregar-registro']);
+const isVisible = ref(props.open);
+
+watch(() => props.open, (newVal) => {
+  isVisible.value = newVal;
+})
+
+const closeModal = () => {
+  emit('update:open', false);
+};
+
+// Filtrar el objectStructure para omitir 'id' y 'otra'
+const filteredObjectStructure = computed(() => {
+  return Object.keys(props.objectStructure).filter(key => key !== 'id' && key !== 'otra');
+});
+
+// Inicializa los campos de `formData` con los valores de las propiedades de objectStructure
+watch(() => props.objectStructure, (newVal) => {
+  Object.keys(newVal).forEach(key => {
+      if (key !== 'id' && key !== 'otra') {
+          formData.value[key] = '';  // Inicializa con un string vacío o el valor que desees
+      }
   });
-  
-  // Emitir eventos al padre para abrir/cerrar el modal
-  const emit = defineEmits(['update:modelValue']);
-  
-  // Variable reactiva para manejar la visibilidad del modal
-  const isVisible = ref(props.modelValue);
-  
-  // Actualizar la visibilidad del modal si cambia desde el padre
-  watch(() => props.modelValue, (newVal) => {
-    isVisible.value = newVal;
-  });
-  
-  // Función para cerrar el modal
-  const closeModal = () => {
-    emit('update:modelValue', false);
-  };
-  </script>
-  
-  <style scoped>
-  /* Puedes añadir estilos adicionales aquí si lo deseas */
-  </style>
-  
+}, { immediate: true });
+
+const submitForm = () => {
+  emit('agregar-registro', formData.value);
+  closeModal();
+}
+</script>

@@ -8,6 +8,7 @@ import { ArrowDownIcon, FunnelIcon } from '@heroicons/vue/24/solid';  // Importa
 import PlusButton from '../components/UI/PlusButton.vue';
 import ModalPost from '../components/UI/ModalPost.vue';
 import { error } from 'jquery';
+import { data } from 'jquery';
 
 
 
@@ -23,8 +24,8 @@ const filtroValoresUnicos = ref([]);
 const sortKey = ref(''); // La columna por la que se ordena
 const sortOrder = ref('asc'); // Estado de la ordenación: 'asc' o 'desc'
 const isModalOpen = ref(false);
-const objectStructure = ref(''); //la estructura del objeto del registro de la tabla
-
+const objectStructure = ref({}); //la estructura del objeto del registro de la tabla
+const tableStructure = ref([])
 
 defineProps({
   titulo: {
@@ -35,13 +36,33 @@ defineProps({
 onMounted(() => {
   TableService.obtenerTabla(name)
     .then((data) => {
+      // console.log(data)
       tabla.value = data;
       columnas.value = Object.keys(data[0]);
       filtroValoresUnicos.value = [...new Set(data.map(item => item[columnas.value[0]]))];
-      objectStructure.value = dataTypeObject(data[0])
+      objectStructure.value = dataTypeObject(data[0]) 
+
     })
     .catch(error => console.log(error));
+
+
+    TableService.obtenerEstructuraTabla(name)
+    .then((data) => {
+      // console.log(data)
+      tableStructure.value = data
+    })
 });
+
+const agregarRegistro = (formData) => {
+  console.log(formData)
+  TableService.agregarRegister(name,formData)
+  .then(respuesta => {
+    console.log(respuesta);
+  })
+  .catch(error => console.log(error));
+}
+
+
 
 // Función para cambiar el estado de la ordenación
 const toggleSort = (col) => {
@@ -93,15 +114,6 @@ const tablaFiltrada = computed(() => {
 //Funcion para abrir el modal
 const openModal = () => {
   isModalOpen.value = true
-}
-
-const agregarRegistro = (formData) => {
-  console.log(formData)
-  TableService.agregarRegister(name,formData)
-  .then(respuesta => {
-    console.log(respuesta);
-  })
-  .catch(error => console.log(error));
 }
 
 //Funsion para determinar el tipo de datos de los atributos de un objeto
@@ -196,7 +208,7 @@ const dataTypeObject = (obj) => {
       </div>
 
     </div>
-    <ModalPost v-model:open="isModalOpen" :columnas="columnas" :name="name" :objectStructure="objectStructure" @agregar-registro="agregarRegistro"></ModalPost>
+    <ModalPost v-model:open="isModalOpen"  :name="name"  :tableStructure="tableStructure" @agregar-registro="agregarRegistro"></ModalPost>
   </div>
 
 

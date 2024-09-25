@@ -32,7 +32,8 @@ export default{
                     resolve(response);
                 },
                 error:(err) => {
-                    reject(err);               }
+                    reject(err);
+                }
             })
         })
     },
@@ -48,8 +49,25 @@ export default{
                 data:JSON.stringify(data),
                 success:(response) => {
                     resolve(response);
-                },
+                },  
                 error:(err) =>{
+                    reject(err);
+                }
+            })
+        })
+    },
+    obtenerEstructuraTabla(name){
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url:'http://localhost:3000/api/tables/typeTable/' + name,
+                method:'GET',
+                headers:{
+                    'Authorization': `Bearer ${token}` 
+                },
+                success:(response) => {
+                    resolve(response);
+                },
+                error:(err) => {
                     reject(err);
                 }
             })
