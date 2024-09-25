@@ -23,6 +23,7 @@ const filtroValoresUnicos = ref([]);
 const sortKey = ref(''); // La columna por la que se ordena
 const sortOrder = ref('asc'); // Estado de la ordenación: 'asc' o 'desc'
 const isModalOpen = ref(false);
+const objectStructure = ref(''); //la estructura del objeto del registro de la tabla
 
 
 defineProps({
@@ -37,6 +38,7 @@ onMounted(() => {
       tabla.value = data;
       columnas.value = Object.keys(data[0]);
       filtroValoresUnicos.value = [...new Set(data.map(item => item[columnas.value[0]]))];
+      objectStructure.value = dataTypeObject(data[0])
     })
     .catch(error => console.log(error));
 });
@@ -100,6 +102,19 @@ const agregarRegistro = (formData) => {
     console.log(respuesta);
   })
   .catch(error => console.log(error));
+}
+
+//Funsion para determinar el tipo de datos de los atributos de un objeto
+const dataTypeObject = (obj) => {
+  const types = {};
+  
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      types[key] = typeof obj[key];
+    }
+  }
+  
+  return types;
 }
 </script>
 
@@ -181,7 +196,7 @@ const agregarRegistro = (formData) => {
       </div>
 
     </div>
-    <ModalPost v-model:open="isModalOpen" :columnas="columnas" :name="name" @agregar-registro="agregarRegistro"></ModalPost>
+    <ModalPost v-model:open="isModalOpen" :columnas="columnas" :name="name" :objectStructure="objectStructure" @agregar-registro="agregarRegistro"></ModalPost>
   </div>
 
 

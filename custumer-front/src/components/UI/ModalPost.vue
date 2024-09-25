@@ -6,7 +6,7 @@
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </TransitionChild>
 
-            <div class="fixed top-20 max-h-[80vh] sm:inset-0 z-10 w-screen overflow-y-auto">
+            <div class="fixed top-32 max-h-[80vh] sm:inset-0 z-10 w-screen overflow-y-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                     <TransitionChild as="template" enter="ease-out duration-300"
                         enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
@@ -83,9 +83,7 @@ const closeModal = () => {
 // Inicializa los campos de `formData` con los valores de las columnas
 watch(() => props.columnas, (newVal) => {
   newVal.forEach(column => {
-    if(column !== 'id'){
-        formData.value[column] = '';  // Inicializa con un string vacío o el valor que desees
-    }
+    formData.value[column] = '';  // Inicializa con un string vacío o el valor que desees
   });
 }, { immediate: true });
 
