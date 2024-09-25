@@ -18,7 +18,18 @@ router.get('/:nombreTabla', async (req, res) => {
 
     try {
         // Consulta dinámica en la segunda base de datos
-        const [results] = await sequelizeDB2.query(`SELECT * FROM ${nombreTabla} LIMIT 10`);
+        const [results] = await sequelizeDB2.query(`SELECT * FROM ${nombreTabla} LIMIT 20`);
+        res.json(results);
+    } catch (err) {
+        res.status(500).json({ msg: err.message });
+    }
+});
+router.get('/typeTable/:nombreTabla', async (req, res) => {
+    const { nombreTabla } = req.params;
+
+    try {
+        // Consulta dinámica en la segunda base de datos
+        const [results] = await sequelizeDB2.query(`DESCRIBE ${nombreTabla}`);
         res.json(results);
     } catch (err) {
         res.status(500).json({ msg: err.message });
